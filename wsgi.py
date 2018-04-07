@@ -8,13 +8,14 @@ from xml.sax.saxutils import escape, unescape
 from flask import Flask, jsonify,render_template
 from threading import Timer, Thread 
 
-application = Flask(__name__)
 
-def create_db():
-    conn = sqlite3.connect('example.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS tracks(artist text, title text)''')
-    conn.close()
+conn = sqlite3.connect('trackr.db')
+c = conn.cursor()
+c.execute('''CREATE TABLE IF NOT EXISTS tracks(artist text, title text)''')
+conn.close()
+
+application = Flask(__name__)
+   
 
 def insert(artist,title):
     conn = sqlite3.connect('example.db')
@@ -41,7 +42,7 @@ def fetch_data():
     artist = xml.find('./Current/Artist').text
     title = xml.find('./Current/Title').text
     a = unescape(artist, html_escape_table)
-    t = unescape(title, html_escape_table)
+    t = unescape(title, html_escape_table)  
     print "Found %s - %s" % (a,t)
     insert(a,t)
         
@@ -84,7 +85,6 @@ class Scheduler(object):
             self._t = None
 
 if __name__ == "__main__":
-    create_db()
     scheduler = Scheduler(120, fetch_data)
     scheduler.start()
     application.run()
