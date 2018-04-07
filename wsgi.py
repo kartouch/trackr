@@ -8,7 +8,7 @@ from xml.sax.saxutils import escape, unescape
 from flask import Flask, jsonify,render_template
 from threading import Timer, Thread 
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 def create_db():
     conn = sqlite3.connect('example.db')
@@ -45,7 +45,7 @@ def fetch_data():
     print "Found %s - %s" % (a,t)
     insert(a,t)
         
-@app.route("/api/v1/tracks")
+@application.route("/api/v1/tracks")
 def apiAll():
     tracks = set(all_tracks())
     attributed_tracks = []
@@ -54,9 +54,9 @@ def apiAll():
         attributed_tracks.append(at)
     return jsonify(attributed_tracks)
 
-@app.route("/")
+@application.route("/")
 def index():
-    return app.send_static_file('index.html')
+    return application.send_static_file('index.html')
     
 
 #https://gist.github.com/chadselph/4ff85c8c4f68aa105f4b#file-flaskwithcron-py-L18
@@ -87,5 +87,5 @@ if __name__ == "__main__":
     create_db()
     scheduler = Scheduler(120, fetch_data)
     scheduler.start()
-    app.run()
+    application.run()
     scheduler.stop()
