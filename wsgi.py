@@ -87,6 +87,5 @@ if __name__ == "__main__":
     create_db()
     scheduler = Scheduler(120, fetch_data)
     scheduler.start()
-    app.run(host="0.0.0.0", port=8080)
+    app.run()
     scheduler.stop()
-
