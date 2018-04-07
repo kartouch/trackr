@@ -18,14 +18,14 @@ application = Flask(__name__)
    
 
 def insert(artist,title):
-    conn = sqlite3.connect('example.db')
+    conn = sqlite3.connect('trackr.db')
     c = conn.cursor()
     c.execute('INSERT INTO tracks (artist,title) VALUES (?,?)',(artist,title))
     conn.commit()
     conn.close()
 
 def all_tracks():
-    conn = sqlite3.connect('example.db')
+    conn = sqlite3.connect('trackr.db')
     c = conn.cursor()
     c.execute('SELECT * from tracks')
     rows = c.fetchall()
