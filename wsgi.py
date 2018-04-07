@@ -16,7 +16,7 @@ application.config['SECRET_KEY'] = 'secret!102ine10i2en19919199129'
 socketio = SocketIO(application)
 
 db_name = 'trackr.db'
-timer = 15
+timer = 61
 conn = sqlite3.connect(db_name)
 c = conn.cursor()
 c.execute("CREATE TABLE IF NOT EXISTS tracks(id INTEGER PRIMARY KEY AUTOINCREMENT,artist text, title text,checked boolean,CONSTRAINT track_unique UNIQUE (artist, title));")
@@ -66,7 +66,7 @@ def background_thread():
     with application.app_context():
         while True:
             socketio.emit('tracks',all_tracks())
-            socketio.sleep(45)
+            socketio.sleep(10)
 
 def check_auth(username, password):
     """This function is called to check if a username /
