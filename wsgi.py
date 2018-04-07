@@ -6,7 +6,8 @@ import xml.etree.ElementTree as ET
 import time
 from xml.sax.saxutils import escape, unescape
 from flask import Flask, jsonify,render_template
-from threading import Timer, Thread 
+import threading
+from apscheduler.scheduler import Scheduler
 
 
 conn = sqlite3.connect('trackr.db')
@@ -45,7 +46,13 @@ def fetch_data():
     t = unescape(title, html_escape_table)  
     print "Found %s - %s" % (a,t)
     insert(a,t)
-        
+
+@application.before_first_request
+def initialize():
+    apsched = Scheduler()
+    apsched.start()
+    apsched.add_interval_job(fetch_data, seconds=120)
+
 @application.route("/api/v1/tracks")
 def apiAll():
     tracks = set(all_tracks())
@@ -60,32 +67,5 @@ def index():
     return application.send_static_file('index.html')
     
 
-#https://gist.github.com/chadselph/4ff85c8c4f68aa105f4b#file-flaskwithcron-py-L18
-class Scheduler(object):
-    def __init__(self, sleep_time, function):
-        self.sleep_time = sleep_time
-        self.function = function
-        self._t = None
-
-    def start(self):
-        if self._t is None:
-            self._t = Timer(self.sleep_time, self._run)
-            self._t.start()
-        else:
-            raise Exception("this timer is already running")
-
-    def _run(self):
-        self.function()
-        self._t = Timer(self.sleep_time, self._run)
-        self._t.start()
-
-    def stop(self):
-        if self._t is not None:
-            self._t.cancel()
-            self._t = None
-
 if __name__ == "__main__":
-    scheduler = Scheduler(120, fetch_data)
-    scheduler.start()
     application.run()
-    scheduler.stop()
