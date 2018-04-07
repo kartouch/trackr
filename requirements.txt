@@ -3,3 +3,6 @@ Flask
 requests
 apscheduler==2.1.2
 futures
+flask-socketio
+eventlet
+gevent-websocket

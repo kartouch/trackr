@@ -11,26 +11,36 @@
     <title>Trackr!</title>
   </head>
   <body ng-controller="trackr">
-    <div class="container-fluid">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col col-lg-2">
+                <h1>Trackr!</h1>
+            </div>
+            <div class="col-md-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th >Artist</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Listen</th>
+                        <th scope="col">Checked</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="track in tracks">
+                            <td>{{ track.artist}}</td>
+                            <td>{{ track.title}}</td>
+                            <td><a target="_blank" href="https://www.youtube.com/results?search_query={{track.artist}}+{{track.title}}"><img src="/static/youtube.png" height="35" width="35" style="position: relative; top: -2px; left: 5px;"></a></td>
+                            <td><button type="button" ng-click="markAsChecked(track)" class="btn btn-outline-success btn-sm">Checked</button></td>
+                        </tr>
+                    </tbody>
+                    </table>
+            </div>
+            <div class="col col-lg-2">
+            </div>
+        
 
-        <h1>Trackr!</h1>
 
-        <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">Artist</th>
-            <th scope="col">Title</th>
-            <th scope="col">Youtube</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="track in tracks">
-                <td>{{ track.artist}}</td>
-                <td>{{ track.title}}</td>
-                <td><a target="_blank" href="https://www.youtube.com/results?search_query={{track.artist}}+{{track.title}}"><img src="/static/youtube.png" height="42" width="42"></a></td>
-            </tr>
-        </tbody>
-        </table>
     </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -38,16 +48,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+    <script src="/static/app.js"></script>
   </body>
 
-  <script>
-    var app = angular.module('trackr', []);
-    app.controller('trackr', function($scope, $http) {
-        $http.get("/api/v1/tracks")
-            .then(function(response) {
-                $scope.tracks = response.data;
-        });
-       
-    });
-  </script>
 </html>
