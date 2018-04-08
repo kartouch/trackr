@@ -17,13 +17,13 @@ socketio = SocketIO(application)
 
 db_name = 'trackr.db'
 timer = 61
-conn = sqlite3.connect(db_name)
+conn = sqlite3.connect(db_name,timeout=10)
 c = conn.cursor()
 c.execute("CREATE TABLE IF NOT EXISTS tracks(id INTEGER PRIMARY KEY AUTOINCREMENT,artist text, title text,checked boolean,CONSTRAINT track_unique UNIQUE (artist, title));")
 conn.close()
 
 def insert(artist,title):
-    conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(db_name,timeout=10)
     c = conn.cursor()
     c.execute('INSERT INTO tracks (artist,title,checked) VALUES (?,?,?)',(artist,title,False))
     conn.commit()
@@ -31,14 +31,14 @@ def insert(artist,title):
     print "Added %s - %s" % (artist,title)
 
 def mark_as_checked(idx):
-    conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(db_name,timeout=10)
     c = conn.cursor()
     c.execute('UPDATE tracks SET checked=? WHERE id=?',(True,idx))
     conn.commit()
     conn.close()
 
 def all_tracks():
-    conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(db_name,timeout=10)
     c = conn.cursor()
     c.execute('SELECT * from tracks where checked = 0;')
     tracks = c.fetchall()
