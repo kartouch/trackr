@@ -27,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="track in tracks">
+                        <tr ng-repeat="track in tracksPaginated" id="track_{{track.id}}">
                             <td>{{ track.artist}}</td>
                             <td>{{ track.title}}</td>
                             <td><a target="_blank" href="https://www.youtube.com/results?search_query={{track.artist}}+{{track.title}}"><img src="/static/youtube.png" height="35" width="35" style="position: relative; top: -2px; left: 5px;"></a></td>
@@ -35,6 +35,17 @@
                         </tr>
                     </tbody>
                     </table>
+
+                    <div style="margin: auto; width:50%">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                <div ng-repeat="page in pages track by $index">
+                                    <li class="page-item"><a class="page-link" data-page="{{$index+1}}" id="pageIndex{{$index+1}}" ng-click="paginateTracks(tracks,$index+1)">{{$index+1}}</a></li>
+                                </div>
+                            </ul>   
+                        </nav>
+                    </div>
+
             </div>
             <div class="col col-lg-2">
             </div>

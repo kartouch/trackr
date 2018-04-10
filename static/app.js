@@ -3,25 +3,33 @@
 var app = angular.module('trackr', []);
 app.controller('trackr', function($scope,$http) {
 
+    $http.get("/api/v1/tracks")
+        .then(function(response) {
+        $scope.tracks = response.data;
+        $scope.tracksPaginated = $scope.tracks.slice(0,10)
+        var p = Math.ceil($scope.tracks.length/10)
+        $scope.pages = new Array(p)
+    }); 
+
     $scope.markAsChecked = function(track) {
-        // how to check if checkbox is selected or not
-        $http.post("/tracks/"+track.id)
+        $http.post("/api/v1/tracks/"+track.id+"/checked")
         .then(
             function(response){
-              // success callback
+              $('#track_'+track.id).hide()
             }
          );
       };
 
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
-    socket.on('connect', function() {
-        socket.emit('message', {data: 'I\'m connected!'});
-    });
 
-    socket.on('tracks', function(tracks) {
-        $scope.$apply(function () {
-            $scope.tracks = tracks
-        });
-    });
+    $scope.paginateTracks = function(tracks,start){
+        if (tracks == undefined){ return }
 
+        var p = Math.ceil(tracks.length/10)
+        $scope.pages = new Array(p)
+        if (start > 0){ start = start -1 }
+        var end = start + 10
+        var trackList = tracks.slice(start,end)
+        $scope.tracksPaginated = trackList
+    };
+    
 });
