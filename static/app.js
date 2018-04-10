@@ -21,13 +21,12 @@ app.controller('trackr', function($scope,$http) {
       };
 
 
-    $scope.paginateTracks = function(tracks,start){
+    $scope.paginateTracks = function(tracks,page){
         if (tracks == undefined){ return }
-
         var p = Math.ceil(tracks.length/10)
         $scope.pages = new Array(p)
-        if (start > 0){ start = start -1 }
-        var end = start + 10
+        var start = (page * 10) - 10
+        var end = start + 9
         var trackList = tracks.slice(start,end)
         $scope.tracksPaginated = trackList
     };
