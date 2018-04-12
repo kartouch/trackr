@@ -23,6 +23,7 @@
                         <th >Artist</th>
                         <th scope="col">Title</th>
                         <th scope="col">Listen</th>
+                        <th scope="col">Download</th>
                         <th scope="col">Checked</th>
                         </tr>
                     </thead>
@@ -31,6 +32,7 @@
                             <td>{{ track.artist}}</td>
                             <td>{{ track.title}}</td>
                             <td><a target="_blank" href="https://www.youtube.com/results?search_query={{track.artist}}+{{track.title}}"><img src="/static/youtube.png" height="35" width="35" style="position: relative; top: -2px; left: 5px;"></a></td>
+                            <td><a target="_blank" href="https://www.bpmsupreme.com/search/{{track.title.split(' ').join(',')}}/audio/1"><img src="/static/bpm.jpeg" height="35" width="35" style="position: relative; top: -2px; left: 5px;"></a></td>
                             <td><button type="button" ng-click="markAsChecked(track)" class="btn btn-outline-success btn-sm">Checked</button></td>
                         </tr>
                     </tbody>
