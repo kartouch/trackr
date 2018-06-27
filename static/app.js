@@ -11,7 +11,7 @@ app.controller('trackr', function($scope,$http) {
         $scope.pages = new Array(p)
     }); 
 
-    $scope.markAsChecked = function(track) {
+    $scope.markAsChecked = track => {
         $http.post("/api/v1/tracks/"+track.id+"/checked")
         .then(
             function(response){
@@ -21,7 +21,7 @@ app.controller('trackr', function($scope,$http) {
       };
 
 
-    $scope.paginateTracks = function(tracks,page){
+    $scope.paginateTracks = (tracks,page) =>{
         if (tracks == undefined){ return }
         var p = Math.ceil(tracks.length/10)
         $scope.pages = new Array(p)

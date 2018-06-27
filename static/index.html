@@ -1,16 +1,19 @@
 <!doctype html>
 <html lang="en" ng-app="trackr">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 
     <title>Trackr!</title>
-  </head>
-  <body ng-controller="trackr">
+</head>
+
+<body ng-controller="trackr">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col col-lg-2">
@@ -20,49 +23,70 @@
                 <table class="table">
                     <thead>
                         <tr>
-                        <th >Artist</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Listen</th>
-                        <th scope="col">Download</th>
-                        <th scope="col">Checked</th>
+                            <th>Artist</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Listen</th>
+                            <th scope="col">BPM</th>
+                            <th scope="col">DJ City</th>
+                            <th scope="col">Checked</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="track in tracksPaginated" id="track_{{track.id}}">
                             <td>{{ track.artist}}</td>
                             <td>{{ track.title}}</td>
-                            <td><a target="_blank" href="https://www.youtube.com/results?search_query={{track.artist}}+{{track.title}}"><img src="/static/youtube.png" height="35" width="35" style="position: relative; top: -2px; left: 5px;"></a></td>
-                            <td><a target="_blank" href="https://www.bpmsupreme.com/search/{{track.title.split(' ').join(',')}}/audio/1"><img src="/static/bpm.jpeg" height="35" width="35" style="position: relative; top: -2px; left: 5px;"></a></td>
-                            <td><button type="button" ng-click="markAsChecked(track)" class="btn btn-outline-success btn-sm">Checked</button></td>
+                            <td>
+                                <a target="_blank" href="https://www.youtube.com/results?search_query={{track.artist}}+{{track.title}}">
+                                    <img src="/static/youtube.png" height="35" width="35" style="position: relative; top: -2px; left: 5px;">
+                                </a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="https://www.bpmsupreme.com/search/{{track.title.split(' ').join(',')}}/audio/1">
+                                    <img src="/static/bpm.jpeg" height="35" width="35" style="position: relative; top: -2px; left: 5px;">
+                                </a>
+                            </td>
+                            <td>
+                                <a target="_blank" href="http://www.djcity.com/search.aspx?searchterm={{track.title.split(' ').join('+')}}">
+                                    <img src="/static/djcity.jpg" height="35" width="35" style="position: relative; top: -2px; left: 5px;">
+                                </a>
+                            </td>
+                            <td>
+                                <button type="button" ng-click="markAsChecked(track)" class="btn btn-outline-success btn-sm">Checked</button>
+                            </td>
                         </tr>
                     </tbody>
-                    </table>
+                </table>
 
-                    <div style="margin: auto; width:50%">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <div ng-repeat="page in pages track by $index">
-                                    <li class="page-item"><a class="page-link" data-page="{{$index+1}}" id="pageIndex{{$index+1}}" ng-click="paginateTracks(tracks,$index+1)">{{$index+1}}</a></li>
-                                </div>
-                            </ul>   
-                        </nav>
-                    </div>
+                <div style="margin: auto; width:50%">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <div ng-repeat="page in pages track by $index">
+                                <li class="page-item">
+                                    <a class="page-link" data-page="{{$index+1}}" id="pageIndex{{$index+1}}" ng-click="paginateTracks(tracks,$index+1)">{{$index+1}}</a>
+                                </li>
+                            </div>
+                        </ul>
+                    </nav>
+                </div>
 
             </div>
             <div class="col col-lg-2">
             </div>
-        
 
 
-    </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
-    <script src="/static/app.js"></script>
-  </body>
+
+        </div>
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+        <script src="/static/app.js"></script>
+</body>
 
 </html>
