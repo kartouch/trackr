@@ -74,7 +74,7 @@ def fetch_data():
     data = requests.get(url)
     track = json.loads(
         data.content.replace('onair({"now":', '').replace('});', ''))
-    t = track['title'].split('-')
+    t = track['title'].split(' - ')
     insert(t[0], t[1])
 
 
