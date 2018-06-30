@@ -25,10 +25,10 @@ app.controller('trackr', function ($scope, $http) {
         if (tracks == undefined) {
             return
         }
-        var p = Math.ceil(tracks.length / 25)
+        var p = Math.ceil(tracks.length / 30)
         $scope.pages = new Array(p)
-        var start = (page * 25) - 25
-        var end = start + 9
+        var start = (page * 30) - 30
+        var end = start + 29
         var trackList = tracks.slice(start, end)
         $scope.tracksPaginated = trackList
     };
