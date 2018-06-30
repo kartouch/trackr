@@ -6,8 +6,8 @@ app.controller('trackr', function ($scope, $http) {
     $http.get("/api/v1/tracks")
         .then(function (response) {
             $scope.tracks = response.data;
-            $scope.tracksPaginated = $scope.tracks.slice(0, 10)
-            var p = Math.ceil($scope.tracks.length / 10)
+            $scope.tracksPaginated = $scope.tracks.slice(0, 30)
+            var p = Math.ceil($scope.tracks.length / 30)
             $scope.pages = new Array(p)
         });
 
