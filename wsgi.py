@@ -14,7 +14,7 @@ application = Flask(__name__)
 application.config['SECRET_KEY'] = 'secret!102ine10i2en19919199129'
 
 db_name = os.environ['TRACKR_DATA'] + '/trackr.db'
-timer = 15
+timer = 120
 conn = sqlite3.connect(db_name, timeout=10)
 c = conn.cursor()
 c.execute(
