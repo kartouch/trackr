@@ -21,6 +21,7 @@ c.execute(
     """CREATE TABLE IF NOT EXISTS tracks(id INTEGER PRIMARY KEY AUTOINCREMENT,
        artist text, title text,checked boolean,
        CONSTRAINT track_unique UNIQUE (artist, title));""")
+conn.commit()
 
 
 def insert(artist, title):
