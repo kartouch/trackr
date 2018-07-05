@@ -34,13 +34,11 @@ def insert(artist, title):
 
 
 def mark_as_checked(idx):
-    conn = sqlite3.connect(db_name, timeout=10)
     c.execute('UPDATE tracks SET checked=? WHERE id=?', (1, idx))
     conn.commit()
 
 
 def all_tracks():
-    conn = sqlite3.connect(db_name, timeout=10)
     c.execute('SELECT * from tracks where checked = 0;')
     tracks = c.fetchall()
     track_list = []
